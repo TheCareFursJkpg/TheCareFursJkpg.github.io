@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The CareFurs Jönköping</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      padding-top: 10px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('furry_banner.png') no-repeat center center / cover;
+      filter: blur(10px) brightness(0.5);
+      z-index: -1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      position: relative;
+      z-index: 1;
+      margin-top: 35px;
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+      color: #fff;
+      background: transparent;
+      animation: fadeIn 2s ease-in;
+      overflow-y: hidden;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        margin-top: 200px;
+        padding-bottom: 40px;
+        overflow-y: auto !important;
+      }
+
+      .content,
+      .content2,
+      .content3 {
+        margin-top: 20px;
+      }
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 0px;
+      right: 240px;
+      z-index: 999;
+    }
+
+    .logo {
+      width: 350px;
+      filter: drop-shadow(0 0 20px #ff00cc);
+      animation: dropIn 1.5s ease-in-out;
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin-top: -10px;
+    }
+
+    @media (max-width: 768px) {
+      .logo-container {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        z-index: 999;
+        padding: 10px 0;
+        background: rgba(27, 0, 51, 0.8);
+        backdrop-filter: blur(6px);
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .logo {
+        width: 180px;
+      }
+    }
+
+    .main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
+    }
+
+    .content,
+    .content2,
+    .content3 {
+      background: linear-gradient(to bottom, #1b0033, #0d001a);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 0, 200, 0.3);
+      border: 2px solid #ff00cc;
+      width: 100%;
+      max-width: 500px;
+      flex: 1 1 300px;
+      margin-bottom: 20px;
+    }
+
+    .content2 {
+      margin-top: -40px;
+    }
+
+    .content {
+      margin-top: -20px;
+    }
+
+    .content3 {
+      height: 844px;
+      margin-top: -20px;
+    }
+
+    .scroll-box {
+      overflow-y: auto;
+      max-height: 300px;
+      padding-right: 10px;
+    }
+
+    .discord-embed {
+      margin-top: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      height: 644px;
+    }
+
+    h1, h2 {
+      color: #ff82c3;
+      text-shadow: 2px 2px #ff00cc;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1em;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 1.1em;
+      color: #ffe6ff;
+    }
+
+    .neon-button {
+      display: inline-block;
+      background: transparent;
+      padding: 15px 30px;
+      border-radius: 30px;
+      border: 2px solid #ff00cc;
+      color: #ff00cc;
+      font-size: 1.2em;
+      text-decoration: none;
+      box-shadow: 0 0 20px #ff00cc;
+      transition: transform 0.2s ease-in-out, background 0.3s;
+    }
+
+    .neon-button:hover {
+      transform: scale(1.1);
+      background-color: #ff00cc;
+      color: #fff;
+    }
+
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slideshow img.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* === MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 40px #ff00cc;
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .modal .close:hover {
+      color: #ff00cc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGGA -->
+  <div class="logo-container">
+    <img src="CareFurs_Logo.png" alt="CareFurs Jönköping Logo" class="logo">
+  </div>
+
+  <!-- INNEHÅLL -->
+  <div class="main">
+    <div style="display: flex; flex-direction: column; gap: 40px; max-width: 500px; width: 100%;">
+      <div class="content">
+        <h1>Välkommen till The CareFurs Jönköping!</h1>
+        <div class="scroll-box">
+          <p>
+            En trygg plats för furries i Smålands hjärta<br><br>
+            The Care Furs Jönköping är en lokal furrygrupp för alla som identifierar sig som en del av furry-communityt i och runt Jönköping. Oavsett om du har varit furry i flera år eller är nyfiken och vill utforska vem du är i en trygg, inkluderande miljö – så är du välkommen hos oss!<br><br>
+            Vi fokuserar på gemenskap, respekt och öppenhet, och vi strävar efter att skapa ett utrymme där varje individ kan känna sig sedd, accepterad och fri att uttrycka sig. Här möts vi genom både online-aktiviteter och fysiska träffar – från fika och promenader till kreativa workshops, fursuit-häng och spontana meetups runt om i Jönköping med omnejd.<br><br>
+            Vi är en community där välmående och vänskap går först, och där både introverta och extroverta får plats att vara sig själva. Våra medlemmar är i olika åldrar och med olika bakgrunder, men har en sak gemensamt – kärleken till det fluffiga, kreativa och unika som furrykulturen innebär.<br><br>
+            🔗 Gå med i vår Discord, delta i våra events, eller bara häng med och lurka tills du känner dig redo – du är alltid välkommen hos The Care Furs Jönköping.
+          </p>
+        </div>
+      </div>
+
+      <div class="content2">
+        <h2 style="text-align: center;">Galleri</h2>
+        <div class="slideshow" id="slideshow">
+          <img src="bildspel/1.jpg" class="active">
+          <img src="bildspel/2.jpg">
+          <img src="bildspel/3.jpg">
+          <img src="bildspel/4.png">
+          <img src="bildspel/5.jpg">
+          <img src="bildspel/6.jpg">
+        </div>
+      </div>
+    </div>
+
+    <div class="content3">
+      <h2>VÅR DISCORD</h2>
+      <iframe class="discord-embed" src="https://discord.com/widget?id=1370343174735921243&theme=dark" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      <p></p>
+      <a href="https://discord.gg/8HcEabM85P" target="_blank" class="neon-button">Gå med i Discorden</a>
+    </div>
+  </div>
+
+  <!-- MODAL POPUP -->
+  <div id="modal" class="modal">
+    <span class="close" id="modalClose">&times;</span>
+    <img id="modalImage" src="" alt="Förhandsvisning">
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const slides = document.querySelectorAll('#slideshow img');
+    const slideshow = document.getElementById('slideshow');
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    let currentIndex = 0;
+
+    function showNextSlide() {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 4000);
+
+    slideshow.addEventListener('click', () => {
+      const activeImg = slides[currentIndex];
+      modalImage.src = activeImg.src;
+      modal.style.display = 'flex';
+    });
+
+    modalClose.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
